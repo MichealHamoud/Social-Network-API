@@ -8,15 +8,18 @@ const reactionSchema = new Schema(
       type: Schema.Types.ObjectId,
       default: () => new Types.ObjectId(),
     },
+
     reactionBody: {
       type: String,
       required: true,
       maxlength: 280,
     },
+
     username: {
       type: String,
       required: true,
     },
+
     createdAt: {
       type: Date,
       default: Date.now,
@@ -24,8 +27,7 @@ const reactionSchema = new Schema(
     },
   },
   {
-    toJson: {
-      virtuals: true,
+    toJSON: {
       getters: true,
     },
     id: false,
@@ -36,19 +38,22 @@ const thoughtSchema = new Schema(
   {
     thoughtText: {
       type: String,
-      required: true,
+      required: "Thought is Required",
       minlength: 1,
       maxlength: 280,
     },
+
     createdAt: {
       type: Date,
       default: Date.now,
       get: (createdAt) => moment(createdAt).format("DD/MM/YYYY hh:mm:ss A"),
     },
+
     username: {
       type: String,
       required: true,
     },
+
     reactions: [reactionSchema],
   },
   {
@@ -60,10 +65,10 @@ const thoughtSchema = new Schema(
   }
 );
 
-thoughtSchema.virtual("reactionCount").get(function () {
-  return this.reaction.length;
+thoughtSchema.virtual("reactionsCount").get(function () {
+  return this.reactions.length;
 });
 
-const Thought = model("Thought", thoughtSchema);
+const Thought = model("thought", thoughtSchema);
 
-module.export = Thought;
+module.exports = Thought;

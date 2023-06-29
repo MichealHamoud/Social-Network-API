@@ -67,7 +67,7 @@ const userController = {
 
   async deleteUser(req, res) {
     try {
-      const deletedUser = await User.findOneAndDelete({ _id: req.params._id });
+      const deletedUser = await User.findOneAndDelete({ _id: req.params.id });
 
       if (!deletedUser) {
         return res.status(404).json({ message: "No user with this id found" });
